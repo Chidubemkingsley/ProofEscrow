@@ -1,0 +1,12 @@
+node_modules
+.git
+dist/ssr
+src
+scripts
+*.config.ts
+*.config.js
+wrangler.jsonc
+bunfig.toml
+tsconfig*
+eslint*
+.prettier*
