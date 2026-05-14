@@ -323,9 +323,10 @@ Active escrows are queryable via the Trustless Work API:
 ---
 
 ## Contributors(Team Boundless Hack)
-Rubeluchukwuisi Chidubem Kingsley (Full stack Smart contract Developer)
-Perpetual Uchechukwu Asogwa  (FUll stack developer)
-Damian Samson (Operations)
+- Rubeluchukwuisi Chidubem Kingsley (Full stack Smart contract Developer)
+- Perpetual Uchechukwu Asogwa  (Full stack developer)
+- Damian Samson (Operations)
+
 ## Built With ❤️ on Stellar 
 
 *LocalP2P · Trustless Work · Stellar Soroban · Built for the Hackathon*
