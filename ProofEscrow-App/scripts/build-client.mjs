@@ -37,7 +37,7 @@ await build({
     alias: { "@": resolve(root, "src") },
   },
   build: {
-    outDir: resolve(root, "dist"),
+    outDir: resolve(root, "public"),
     emptyOutDir: true,
   },
   optimizeDeps: {

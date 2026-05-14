@@ -9,6 +9,8 @@ import { join } from "path";
 // Try both possible asset locations
 async function findAssetsDir() {
   const candidates = [
+    "public/client/assets",
+    "public/assets",
     "dist/client/assets",
     "dist/client/client/assets",
   ];
