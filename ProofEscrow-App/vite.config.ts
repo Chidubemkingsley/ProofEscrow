@@ -1,38 +1,50 @@
-// @lovable.dev/vite-tanstack-config already includes the following — do NOT add them manually
-// or the app will break with duplicate plugins:
-//   - tanstackStart, viteReact, tailwindcss, tsConfigPaths, cloudflare (build-only),
-//     componentTagger (dev-only), VITE_* env injection, @ path alias, React/TanStack dedupe,
-//     error logger plugins, and sandbox detection (port/host/strictPort).
-import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
+import { tanstackRouter } from "@tanstack/router-plugin/vite";
+import { fileURLToPath } from "url";
+import { dirname, resolve } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export default defineConfig({
-  tanstackStart: {
-    server: { entry: "server" },
-  },
-  // Disable Cloudflare plugin — we deploy to Vercel as a static SPA
-  cloudflare: false,
   plugins: [
+    // File-based routing — generates routeTree.gen.ts
+    tanstackRouter({ target: "react", autoCodeSplitting: true }),
+    react(),
+    tailwindcss(),
+    tsconfigPaths(),
+    // Polyfill Node.js globals for @stellar/stellar-sdk
     nodePolyfills({
       globals: { Buffer: true, global: true, process: true },
       protocolImports: true,
       include: ["buffer", "process", "util", "stream", "events", "crypto"],
     }),
   ],
-  vite: {
-    define: {
-      global: "globalThis",
+  define: {
+    global: "globalThis",
+  },
+  resolve: {
+    alias: {
+      "@": resolve(__dirname, "src"),
     },
-    optimizeDeps: {
-      include: [
-        "@stellar/stellar-sdk",
-        "@stellar/stellar-base",
-        "@stellar/freighter-api",
-        "@creit.tech/stellar-wallets-kit",
-        "randombytes",
-        "buffer",
-        "events",
-      ],
-    },
+  },
+  build: {
+    outDir: "dist",
+    emptyOutDir: true,
+  },
+  optimizeDeps: {
+    include: [
+      "@stellar/stellar-sdk",
+      "@stellar/stellar-base",
+      "@stellar/freighter-api",
+      "@creit.tech/stellar-wallets-kit",
+      "randombytes",
+      "buffer",
+      "events",
+    ],
   },
 });

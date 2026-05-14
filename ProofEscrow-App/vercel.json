@@ -1,6 +1,6 @@
 {
-  "buildCommand": "bun run build:vercel",
-  "outputDirectory": "public/client",
+  "buildCommand": "bun run build",
+  "outputDirectory": "dist",
   "installCommand": "bun install",
   "framework": null,
   "rewrites": [
