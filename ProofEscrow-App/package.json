@@ -7,7 +7,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "build:dev": "vite build --mode development",
-    "build:vercel": "node --input-type=module -e \"import('vite').then(({build})=>build({configFile:'vite.config.ts',logLevel:'info'}))\" && node scripts/generate-index.mjs",
+    "build:vercel": "VERCEL=1 vite build && node scripts/generate-index.mjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."

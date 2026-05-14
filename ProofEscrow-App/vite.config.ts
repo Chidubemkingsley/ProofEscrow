@@ -35,6 +35,8 @@ export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
+  // Disable Cloudflare Worker SSR build for Vercel static deployment
+  cloudflare: process.env.VERCEL ? false : undefined,
   plugins: [
     // Polyfill Node.js globals (Buffer, process, etc.) for the CLIENT bundle only.
     // Wrapped to prevent injection into the Cloudflare Worker SSR environment.
