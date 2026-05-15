@@ -3,7 +3,6 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
-import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
 
@@ -12,12 +11,9 @@ const __dirname = dirname(__filename);
 
 export default defineConfig({
   plugins: [
-    // File-based routing — generates routeTree.gen.ts
-    tanstackRouter({ target: "react", autoCodeSplitting: true }),
     react(),
     tailwindcss(),
     tsconfigPaths(),
-    // Polyfill Node.js globals for @stellar/stellar-sdk
     nodePolyfills({
       globals: { Buffer: true, global: true, process: true },
       protocolImports: true,
