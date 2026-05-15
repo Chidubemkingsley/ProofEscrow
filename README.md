@@ -1,4 +1,4 @@
-# ProofEscrow:  LocalP2P — Non-Custodial OTC Exchange
+LocalP2P — Non-Custodial OTC Exchange
 
 > **Censorship-resistant P2P trading of USDC for local fiat (NGN, GHS, KES) — powered by Stellar Soroban smart contracts and Trustless Work.**
 
@@ -6,7 +6,7 @@
 ![IMAGE](Public/ProofEscrow.png)
 ## 1. The Vision
 
-ProofEcrow(LocalP2P) is a censorship-resistant, non-custodial marketplace for buying and selling stablecoins with local fiat (NGN, GHS, KES). It eliminates the "Escrow Scams" common in centralized P2P by putting the collateral in a smart contract that neither party can touch without proof.
+LocalP2P is a censorship-resistant, non-custodial marketplace for buying and selling stablecoins with local fiat (NGN, GHS, KES). It eliminates the "Escrow Scams" common in centralized P2P by putting the collateral in a smart contract that neither party can touch without proof.
 
 ---
 
