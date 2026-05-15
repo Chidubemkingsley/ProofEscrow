@@ -115,10 +115,10 @@ ProofEcrow(LocalP2P) is a censorship-resistant, non-custodial marketplace for bu
 ## 7. Demo
 
 ### Live Demo
-> *(Deploy link — add after Vercel deployment)*
+> [Website](https://proof-escrow-zyb5.vercel.app/)
 
 ### Demo Video
-> *(1-minute walkthrough — add link)*
+> [Youtube](https://youtu.be/VThigz2X910)
 
 ### Successful Testnet Contract Interaction
 **Transaction Hash:** `10968075163701248`  
