@@ -10,12 +10,6 @@ import { toast } from "sonner";
 
 export const Route = createFileRoute("/create-offer")({
   component: CreateOffer,
-  head: () => ({
-    meta: [
-      { title: "Create Sell Offer — LocalP2P" },
-      { name: "description", content: "List USDC for sale on the non-custodial LocalP2P marketplace." },
-    ],
-  }),
 });
 
 /** Platform-wide trade limits in USDC */

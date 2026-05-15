@@ -8,12 +8,6 @@ import { toast } from "sonner";
 
 export const Route = createFileRoute("/")({
   component: Index,
-  head: () => ({
-    meta: [
-      { title: "LocalP2P — Non-Custodial OTC Exchange for USDC" },
-      { name: "description", content: "Buy and sell USDC with NGN, GHS, KES on a non-custodial P2P marketplace. On-chain Soroban escrow — funds can never be frozen." },
-    ],
-  }),
 });
 
 function Index() {

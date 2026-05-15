@@ -4,7 +4,6 @@ import { useApp, fmtFiat, fmtUsdc } from "@/lib/store";
 
 export const Route = createFileRoute("/my-trades")({
   component: MyTrades,
-  head: () => ({ meta: [{ title: "My Trades — LocalP2P" }] }),
 });
 
 const STATUS_STYLE: Record<string, string> = {

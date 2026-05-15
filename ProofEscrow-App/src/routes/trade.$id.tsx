@@ -11,12 +11,6 @@ import { toast } from "sonner";
 
 export const Route = createFileRoute("/trade/$id")({
   component: TradePage,
-  head: ({ params }) => ({
-    meta: [
-      { title: `Trade #${params.id} — LocalP2P` },
-      { name: "description", content: "On-chain escrow trade detail." },
-    ],
-  }),
 });
 
 function TradePage() {

@@ -9,17 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as MyTradesRouteImport } from './routes/my-trades'
 import { Route as CreateOfferRouteImport } from './routes/create-offer'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TradeIdRouteImport } from './routes/trade.$id'
 
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const MyTradesRoute = MyTradesRouteImport.update({
   id: '/my-trades',
   path: '/my-trades',
@@ -45,14 +39,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/create-offer': typeof CreateOfferRoute
   '/my-trades': typeof MyTradesRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/trade/$id': typeof TradeIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/create-offer': typeof CreateOfferRoute
   '/my-trades': typeof MyTradesRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/trade/$id': typeof TradeIdRoute
 }
 export interface FileRoutesById {
@@ -60,45 +52,25 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/create-offer': typeof CreateOfferRoute
   '/my-trades': typeof MyTradesRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/trade/$id': typeof TradeIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/create-offer'
-    | '/my-trades'
-    | '/sitemap.xml'
-    | '/trade/$id'
+  fullPaths: '/' | '/create-offer' | '/my-trades' | '/trade/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create-offer' | '/my-trades' | '/sitemap.xml' | '/trade/$id'
-  id:
-    | '__root__'
-    | '/'
-    | '/create-offer'
-    | '/my-trades'
-    | '/sitemap.xml'
-    | '/trade/$id'
+  to: '/' | '/create-offer' | '/my-trades' | '/trade/$id'
+  id: '__root__' | '/' | '/create-offer' | '/my-trades' | '/trade/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CreateOfferRoute: typeof CreateOfferRoute
   MyTradesRoute: typeof MyTradesRoute
-  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TradeIdRoute: typeof TradeIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/my-trades': {
       id: '/my-trades'
       path: '/my-trades'
@@ -134,7 +106,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CreateOfferRoute: CreateOfferRoute,
   MyTradesRoute: MyTradesRoute,
-  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TradeIdRoute: TradeIdRoute,
 }
 export const routeTree = rootRouteImport
