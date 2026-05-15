@@ -56,7 +56,7 @@ export function AppNav() {
         <div className="flex items-center gap-8">
           <Link to="/" className="text-lg font-bold tracking-tighter text-foreground flex items-center gap-2">
             <span className="size-2.5 bg-primary rounded-full animate-pulse-dot shadow-[0_0_12px_var(--color-primary)]" />
-            LOCAL<span className="text-primary">P2P</span>
+            Settl<span className="text-primary">a</span>
           </Link>
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-6">

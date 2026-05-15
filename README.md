@@ -1,4 +1,4 @@
-LocalP2P — Non-Custodial OTC Exchange
+Settla — Non-Custodial OTC Exchange
 
 > **Censorship-resistant P2P trading of USDC for local fiat (NGN, GHS, KES) — powered by Stellar Soroban smart contracts and Trustless Work.**
 
@@ -6,7 +6,7 @@ LocalP2P — Non-Custodial OTC Exchange
 ![IMAGE](Public/ProofEscrow.png)
 ## 1. The Vision
 
-LocalP2P is a censorship-resistant, non-custodial marketplace for buying and selling stablecoins with local fiat (NGN, GHS, KES). It eliminates the "Escrow Scams" common in centralized P2P by putting the collateral in a smart contract that neither party can touch without proof.
+Settla is a censorship-resistant, non-custodial marketplace for buying and selling stablecoins with local fiat (NGN, GHS, KES). It eliminates the "Escrow Scams" common in centralized P2P by putting the collateral in a smart contract that neither party can touch without proof.
 
 ---
 
@@ -20,7 +20,7 @@ LocalP2P is a censorship-resistant, non-custodial marketplace for buying and sel
 
 ### The Solution
 
-- **Non-Custodial Security:** Funds are locked in a Soroban Smart Contract. LocalP2P never holds user funds, meaning they cannot be frozen by the platform.
+- **Non-Custodial Security:** Funds are locked in a Soroban Smart Contract. Settla never holds user funds, meaning they cannot be frozen by the platform.
 - **Immutable Evidence:** When a buyer pays, they must upload proof to the milestone. This record is stored on IPFS via Pinata, ensuring the Dispute Resolver has a single source of truth.
 - **Trustless Payouts:** Once the Seller verifies the fiat and clicks "Approve", the crypto is released instantly. The code enforces the agreement, not a middleman.
 
@@ -43,7 +43,7 @@ LocalP2P is a censorship-resistant, non-custodial marketplace for buying and sel
 | Service Provider | Buyer | Uploads bank receipt as evidence |
 | Approver | Seller | Approves release after confirming fiat |
 | Receiver | Buyer's wallet | Receives USDC on release |
-| Release Signer | LocalP2P Platform | Triggers the on-chain release |
+| Release Signer | Settla Platform | Triggers the on-chain release |
 | Dispute Resolver | Platform Admin | Arbitrates if seller ghosts after receiving fiat |
 
 ### The Trade Lifecycle
@@ -146,7 +146,7 @@ LocalP2P is a censorship-resistant, non-custodial marketplace for buying and sel
 
 ## 7.5 Payment Evidence — What to Upload & How to Get It
 
-The **payment evidence** is the screenshot a buyer uploads to prove they sent the fiat money. It is the core anti-fraud mechanism of LocalP2P.
+The **payment evidence** is the screenshot a buyer uploads to prove they sent the fiat money. It is the core anti-fraud mechanism of Settla.
 
 ### What it is
 A screenshot of your bank transfer confirmation — specifically:
@@ -158,7 +158,7 @@ A screenshot of your bank transfer confirmation — specifically:
 1. Open your banking app (OPay, Kuda, GTBank, Access, M-Pesa, etc.)
 2. Send the **exact fiat amount** shown in the trade room to the seller's account number
 3. After the transfer succeeds, your bank shows a confirmation screen — **screenshot that screen**
-4. Return to the LocalP2P trade room and upload the screenshot
+4. Return to the Settla trade room and upload the screenshot
 
 > 💡 **The screenshot of the successful bank transfer is the file to upload.** It is your proof of payment — the seller sees it, the arbiter sees it, and it is permanently stored on IPFS so it can never be altered or disputed.
 
@@ -329,4 +329,4 @@ Active escrows are queryable via the Trustless Work API:
 
 ## Built With ❤️ on Stellar 
 
-*LocalP2P · Trustless Work · Stellar Soroban · Built for the Hackathon*
+*Settla · Trustless Work · Stellar Soroban · Built for the Hackathon*

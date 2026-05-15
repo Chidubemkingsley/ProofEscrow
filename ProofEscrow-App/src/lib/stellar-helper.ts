@@ -45,7 +45,6 @@ export class StellarHelper {
 
     this._kit = new StellarWalletsKit({
       network,
-      selectedWalletId: FREIGHTER_ID,
       modules: allowAllModules(),
     });
 

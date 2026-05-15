@@ -77,37 +77,21 @@ function TradePage() {
         evidenceUrl = URL.createObjectURL(file);
         await new Promise((r) => setTimeout(r, 800));
       } else {
-        // Real trade — pin to IPFS via Pinata
+        // Real trade — pin to IPFS via Pinata only.
+        // The on-chain milestone status update is done by the SELLER when they
+        // click Approve & Release (seller is the registered serviceProvider).
         toast.loading("Pinning evidence to IPFS…", { id: "ipfs" });
         evidenceUrl = await pinFileToIPFS(file);
         toast.dismiss("ipfs");
 
-        // Submit evidence on-chain via change-milestone-status
-        // serviceProvider = buyer (walletAddress)
-        toast.loading("Recording evidence on escrow…", { id: "milestone" });
-        const statusRes = await trustless.changeMilestoneStatus(
-          trade.escrowContract,
-          walletAddress!,
-          evidenceUrl
-        );
-        toast.dismiss("milestone");
-
-        toast.loading("Sign the evidence transaction…", { id: "sign-evidence" });
-        const signedXdr = await stellar.signTransaction(statusRes.unsignedTransaction);
-        toast.dismiss("sign-evidence");
-
-        toast.loading("Submitting to Stellar…", { id: "submit-evidence" });
-        await trustless.sendTransaction(signedXdr);
-        toast.dismiss("submit-evidence");
-
-        // Notify seller via Pusher
+        // Notify seller via Pusher so they know to review and approve
         notifyEvidenceUploaded(trade.id);
       }
 
       uploadEvidence(trade.id, evidenceUrl);
-      toast.success(isDemo ? "Demo evidence submitted" : "Evidence pinned to escrow milestone");
+      toast.success(isDemo ? "Demo evidence submitted" : "Evidence pinned to IPFS — seller has been notified");
     } catch (err: any) {
-      ["ipfs","milestone","sign-evidence","submit-evidence"].forEach(id => toast.dismiss(id));
+      ["ipfs"].forEach(id => toast.dismiss(id));
       toast.error("Upload failed: " + (err?.message ?? "Unknown error"));
     } finally {
       setUploadingEvidence(false);
@@ -118,7 +102,27 @@ function TradePage() {
     setApprovingRelease(true);
     try {
       if (!isDemo && trade.escrowContract) {
-        // Step 1: Approve milestone (seller signs)
+        // Step 1: Submit evidence on-chain — seller is the registered serviceProvider
+        // The buyer already pinned to IPFS; the seller submits that URL on-chain here.
+        if (trade.evidenceUrl) {
+          toast.loading("Recording evidence on escrow…", { id: "milestone-status" });
+          const statusRes = await trustless.changeMilestoneStatus(
+            trade.escrowContract,
+            trade.sellerAddress,
+            trade.evidenceUrl
+          );
+          toast.dismiss("milestone-status");
+
+          toast.loading("Sign the evidence submission…", { id: "sign-status" });
+          const signedStatusXdr = await stellar.signTransaction(statusRes.unsignedTransaction);
+          toast.dismiss("sign-status");
+
+          toast.loading("Submitting evidence to Stellar…", { id: "submit-status" });
+          await trustless.sendTransaction(signedStatusXdr);
+          toast.dismiss("submit-status");
+        }
+
+        // Step 2: Approve milestone (seller signs)
         toast.loading("Preparing approval…", { id: "approve" });
         const approveRes = await trustless.approveMilestone(trade.escrowContract, walletAddress!);
         toast.dismiss("approve");
@@ -131,15 +135,11 @@ function TradePage() {
         await trustless.sendTransaction(signedApproveXdr);
         toast.dismiss("submit-approve");
 
-        // Step 2: Release funds (releaseSigner = platform)
-        // For MVP: platform signs client-side — in production move to server
-        const PLATFORM_ADDRESS = import.meta.env.VITE_PLATFORM_ADDRESS ?? "";
+        // Step 3: Release funds — releaseSigner = seller's wallet (registered on-chain during deploy)
         toast.loading("Preparing release…", { id: "release" });
-        const releaseRes = await trustless.releaseFunds(trade.escrowContract, PLATFORM_ADDRESS);
+        const releaseRes = await trustless.releaseFunds(trade.escrowContract, trade.sellerAddress);
         toast.dismiss("release");
 
-        // Platform wallet signs — for hackathon demo we use the connected wallet
-        // In production the platform signs server-side
         toast.loading("Sign the release in your wallet…", { id: "sign-release" });
         const signedReleaseXdr = await stellar.signTransaction(releaseRes.unsignedTransaction);
         toast.dismiss("sign-release");
@@ -153,7 +153,7 @@ function TradePage() {
 
       approveRelease(trade.id);
     } catch (err: any) {
-      ["approve","sign-approve","submit-approve","release","sign-release","submit-release"].forEach(id => toast.dismiss(id));
+      ["milestone-status","sign-status","submit-status","approve","sign-approve","submit-approve","release","sign-release","submit-release"].forEach(id => toast.dismiss(id));
       toast.error("Release failed: " + (err?.message ?? "Unknown error"));
     } finally {
       setApprovingRelease(false);
@@ -423,7 +423,7 @@ function TradePage() {
                   <div className="p-5 rounded-xl bg-destructive/10 border border-destructive/30 text-center">
                     <AlertTriangle className="size-8 mx-auto text-destructive mb-2" />
                     <div className="font-bold">Dispute open</div>
-                    <div className="text-xs text-muted-foreground mt-1">A LocalP2P arbiter is reviewing the evidence. Estimated resolution: 24–48h.</div>
+                    <div className="text-xs text-muted-foreground mt-1">A Settla arbiter is reviewing the evidence. Estimated resolution: 24–48h.</div>
                     {trade.evidenceUrl && (
                       <a href={trade.evidenceUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1 text-xs text-primary hover:underline">
                         View evidence <ExternalLink className="size-3" />

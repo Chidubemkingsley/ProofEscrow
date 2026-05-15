@@ -1,4 +1,4 @@
-# LocalP2P — Implementation Task List
+# Settla — Implementation Task List
 
 ## Stack & Runtime
 - **Framework:** TanStack Start (Vite + React 19)

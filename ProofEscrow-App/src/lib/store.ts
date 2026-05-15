@@ -230,8 +230,8 @@ export const useApp = create<State>()(
           accountNumber: offer.accountNumber,
           accountName: offer.accountName,
           status: "funded",
-          escrowContract: rndContract(),
-          txHash: rndHash(),
+          escrowContract: isDemo ? rndContract() : (offer.escrowContract ?? rndContract()),
+          txHash: isDemo ? rndHash() : (offer.txHash ?? rndHash()),
           createdAt: Date.now(),
           messages: [
             { from: "system", at: Date.now(), text: `Escrow contract deployed. ${amountUsdc} USDC locked on Stellar.` },
@@ -278,10 +278,10 @@ export const useApp = create<State>()(
                   }
                 : t,
             ),
-            // Replenish demo offer; credit real buyer wallet
+            // Demo: replenish. Real: remove the offer (USDC sent to buyer, escrow closed)
             offers: isDemo
               ? s.offers.map((o) => o.id === trade?.offerId ? { ...o, available: DEMO_AVAILABLE } : o)
-              : s.offers,
+              : s.offers.filter((o) => o.id !== trade?.offerId),
             walletBalanceUsdc:
               trade?.buyerAddress === s.walletAddress
                 ? s.walletBalanceUsdc + (trade?.amountUsdc ?? 0)
@@ -294,17 +294,21 @@ export const useApp = create<State>()(
           const isDemo = trade?.offerId.startsWith("demo-");
           return {
             trades: s.trades.map((t) => (t.id === tradeId ? { ...t, status: "cancelled" } : t)),
-            // Replenish demo offer on cancel too
+            // Demo: replenish. Real: restore available (escrow refunds seller)
             offers: isDemo
               ? s.offers.map((o) => o.id === trade?.offerId ? { ...o, available: DEMO_AVAILABLE } : o)
-              : s.offers,
+              : s.offers.map((o) =>
+                  o.id === trade?.offerId
+                    ? { ...o, available: o.available + (trade?.amountUsdc ?? 0) }
+                    : o
+                ),
           };
         }),
       disputeTrade: (tradeId) =>
         set((s) => ({
           trades: s.trades.map((t) =>
             t.id === tradeId
-              ? { ...t, status: "disputed", messages: [...t.messages, { from: "system", at: Date.now(), text: "Dispute opened. A LocalP2P arbiter has been notified." }] }
+              ? { ...t, status: "disputed", messages: [...t.messages, { from: "system", at: Date.now(), text: "Dispute opened. A Settla arbiter has been notified." }] }
               : t,
           ),
         })),
@@ -314,7 +318,7 @@ export const useApp = create<State>()(
         })),
     }),
     {
-      name: "localp2p-state",
+      name: "settla-state",
       partialize: (s) => ({ walletAddress: s.walletAddress, walletBalanceUsdc: s.walletBalanceUsdc, offers: s.offers, trades: s.trades, rates: s.rates }),
     },
   ),

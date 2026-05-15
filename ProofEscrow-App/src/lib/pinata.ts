@@ -17,7 +17,7 @@ export async function pinFileToIPFS(file: File): Promise<string> {
   formData.append("file", file);
   formData.append(
     "pinataMetadata",
-    JSON.stringify({ name: `localp2p-evidence-${Date.now()}` })
+    JSON.stringify({ name: `settla-evidence-${Date.now()}` })
   );
   formData.append(
     "pinataOptions",

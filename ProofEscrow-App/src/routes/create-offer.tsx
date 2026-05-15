@@ -96,15 +96,15 @@ function CreateOffer() {
       const deployRes = await trustless.deployEscrow({
         signer: walletAddress!,
         engagementId,
-        title: `LocalP2P Sell ${amount} USDC → ${currency}`,
+        title: `Settla Sell ${amount} USDC → ${currency}`,
         description: `Sell ${amount} USDC for ${currency} at ${price.toFixed(2)} ${currency}/USDC`,
         roles: {
-          approver: walletAddress!,
-          serviceProvider: PLATFORM_ADDRESS || walletAddress!,
+          approver: walletAddress!,           // seller approves
+          serviceProvider: walletAddress!,     // will be overridden at trade time; placeholder = seller
           platformAddress: PLATFORM_ADDRESS || walletAddress!,
-          releaseSigner: PLATFORM_ADDRESS || walletAddress!,
+          releaseSigner: walletAddress!,       // seller self-releases (no separate platform key needed)
           disputeResolver: PLATFORM_ADDRESS || walletAddress!,
-          receiver: PLATFORM_ADDRESS || walletAddress!,
+          receiver: walletAddress!,            // will be overridden at trade time; placeholder = seller
         },
         amount,
         platformFee: 1,
@@ -181,7 +181,7 @@ function CreateOffer() {
           <p className="text-[10px] font-mono uppercase tracking-widest text-primary mb-2">Step 1 / 2 · Single-Release Escrow</p>
           <h1 className="text-3xl font-bold tracking-tight">Create a sell offer</h1>
           <p className="text-sm text-muted-foreground mt-2">
-            Lock USDC in a Soroban contract. Buyers pay you in fiat, you approve, contract releases. LocalP2P never touches your money.
+            Lock USDC in a Soroban contract. Buyers pay you in fiat, you approve, contract releases. Settla never touches your money.
           </p>
         </div>
 

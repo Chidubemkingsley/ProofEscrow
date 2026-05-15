@@ -18,7 +18,7 @@ function Index() {
   // Fetch live rates on mount
   useEffect(() => { fetchRates(); }, []);
 
-  const filtered = useMemo(() => offers.filter((o) => o.currency === currency).sort((a, b) => a.pricePerUsdc - b.pricePerUsdc), [offers, currency]);
+  const filtered = useMemo(() => offers.filter((o) => o.currency === currency && o.available > 0).sort((a, b) => a.pricePerUsdc - b.pricePerUsdc), [offers, currency]);
 
   const totalLocked = useMemo(() => offers.reduce((s, o) => s + o.available, 0), [offers]);
 
@@ -53,7 +53,7 @@ function Index() {
                 Without trusting anyone.
               </h1>
               <p className="text-muted-foreground max-w-xl text-sm md:text-base">
-                LocalP2P never holds your funds. Every trade is locked in a Soroban smart contract — neither the seller, the buyer, nor the platform can move it without proof.
+                Settla never holds your funds. Every trade is locked in a Soroban smart contract — neither the seller, the buyer, nor the platform can move it without proof.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link to="/create-offer" className="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition shadow-[0_0_24px_rgba(16,185,129,0.3)] inline-flex items-center gap-2">
@@ -126,14 +126,14 @@ function Index() {
 
         {/* Trust footer */}
         <section className="mt-16 grid md:grid-cols-3 gap-4">
-          <TrustCard icon={<Lock className="size-5" />} title="Non-custodial" body="USDC sits in a Soroban contract. LocalP2P has no withdrawal key. No platform freeze, no seizure." />
+          <TrustCard icon={<Lock className="size-5" />} title="Non-custodial" body="USDC sits in a Soroban contract. Settla has no withdrawal key. No platform freeze, no seizure." />
           <TrustCard icon={<ShieldCheck className="size-5" />} title="Immutable evidence" body="Bank receipts are pinned to the milestone. The arbiter sees the same proof you do." />
           <TrustCard icon={<Zap className="size-5" />} title="Trustless payouts" body="One signature releases funds. No middleman, no manual wire — code enforces the trade." />
         </section>
       </main>
 
       <footer className="border-t border-border mt-16 py-8 px-4 md:px-8 text-center text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
-        LocalP2P · Built on Stellar · Trustless Work
+        Settla · Built on Stellar · Trustless Work
       </footer>
     </div>
   );

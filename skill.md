@@ -1,6 +1,6 @@
-LocalP2P: Non-Custodial OTC Exchange
+Settla: Non-Custodial OTC Exchange
 1. The Vision
-LocalP2P is a censorship-resistant, non-custodial marketplace for buying and selling stablecoins with local fiat (NGN, GHS, KES). It eliminates the "Escrow Scams" common in centralized P2P by putting the collateral in a smart contract that neither party can touch without proof.
+Settla is a censorship-resistant, non-custodial marketplace for buying and selling stablecoins with local fiat (NGN, GHS, KES). It eliminates the "Escrow Scams" common in centralized P2P by putting the collateral in a smart contract that neither party can touch without proof.
 
 2. Problem & Solution
 The Problem
@@ -8,7 +8,7 @@ Escrow Scams: On many P2P platforms, sellers can "ghost" buyers after receiving 
 Lack of Privacy: Centralized exchanges require heavy KYC and can leak sensitive user data, making users vulnerable.
 Chargeback/Receipt Fraud: Buyers sometimes use fake screenshots to trick sellers. Without an immutable record of evidence, disputes are hard to resolve fairly.
 The Solution
-Non-Custodial Security: Funds are locked in a Soroban Smart Contract. LocalP2P never holds user funds, meaning they cannot be frozen by the platform.
+Non-Custodial Security: Funds are locked in a Soroban Smart Contract. Settla never holds user funds, meaning they cannot be frozen by the platform.
 Immutable Evidence: When a buyer pays, they must upload proof to the milestone. This record is stored on-chain (or via IPFS), ensuring the Dispute Resolver has a single source of truth.
 Trustless Payouts: Once the Seller verifies the fiat and clicks "Approve", the crypto is released instantly. The code enforces the agreement, not a middleman.
 3. Technical Architecture (Trustless Work Integration)
@@ -21,7 +21,7 @@ Funder (The Seller): The person selling USDC for Naira. They lock the USDC in es
 Service Provider (The Buyer): The person paying Naira. They upload the bank receipt.
 Approver (The Seller): Once they see the bank alert, they approve the release.
 Receiver: The Buyer's wallet (gets the USDC).
-Release Signer: The LocalP2P Platform (Triggers the move once approved).
+Release Signer: The Settla Platform (Triggers the move once approved).
 Dispute Resolver: The Platform Admin (Arbitrates if the Buyer pays but the Seller won't release).
 3. The Lifecycle (The "Trade" Flow)
 Initiate: Seller creates an offer. Platform calls /deployer/single-release.
@@ -48,7 +48,7 @@ Buyer sees the Seller's bank details (provided in the escrow metadata or chat).
 Buyer makes the bank transfer and uploads a screenshot of the receipt as Evidence.
 Seller receives a real-time notification that payment proof has been submitted.
 Phase 3: Payout
-Seller checks their bank app. Once confirmed, they click Approve on LocalP2P.
+Seller checks their bank app. Once confirmed, they click Approve on Settla.
 The 500 USDC is instantly released from the Soroban contract to the Buyer's wallet.
 Both parties rate each other to build on-chain reputation.
 6. Winning Demo Strategy (Judges' Perspective)
